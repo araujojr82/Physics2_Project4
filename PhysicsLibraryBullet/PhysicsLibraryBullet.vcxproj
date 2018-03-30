@@ -164,6 +164,7 @@
     <ClCompile Include="shapes.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="constraints.h" />
     <ClInclude Include="cPhysicsBulletFactory.h" />
     <ClInclude Include="cPhysicsBulletWorld.h" />
     <ClInclude Include="cBulletRigidBody.h" />
