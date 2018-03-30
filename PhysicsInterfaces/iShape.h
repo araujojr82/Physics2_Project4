@@ -13,6 +13,9 @@ namespace nPhysics
 		
 		eShapeType GetShapeType() { return mShapeType; }
 
+		virtual bool GetBoxHalfExtends( glm::vec3& halfExtendOut ) { return false; }
+		virtual bool GetCapsuleHeight( float& heightOut ) { return false; }
+		virtual bool GetCapsuleRadius( float& radiusOut ) { return false; }
 		virtual bool GetSphereRadius(float& radiusOut) { return false; }
 		virtual bool GetPlaneNormal(glm::vec3& normalOut) { return false; }
 		virtual bool GetPlaneConst(float& planeConstOut) { return false; }

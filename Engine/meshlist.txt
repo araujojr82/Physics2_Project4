@@ -1,4 +1,6 @@
 ball       	assets/models/ball_xyz_n.ply
+capsule		assets/models/capsule2x1.ply
+cube		assets/models/cube.ply
 floor_plane	assets/models/floor_plane.ply
 north_plane	assets/models/north_plane.ply
 south_plane	assets/models/south_plane.ply

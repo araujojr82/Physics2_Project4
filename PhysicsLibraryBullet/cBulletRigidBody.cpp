@@ -64,7 +64,53 @@ namespace nPhysics
 			this->myBulletBody = new btRigidBody( rigidBodyCI );
 
 			this->myBulletBody->setRestitution( 0.8 );
-		}				
+		}
+		else if( shape->GetShapeType() == nPhysics::SHAPE_TYPE_BOX )
+		{
+			btCollisionShape* theShape = nullptr;
+			btVector3 position = btVector3( desc.Position.x, desc.Position.y, desc.Position.z );
+			btDefaultMotionState* motionState = new btDefaultMotionState( btTransform( btQuaternion( 0, 0, 0, 1 ), position ) );
+
+			glm::vec3 halfExtends;
+			shape->GetBoxHalfExtends( halfExtends );
+			btVector3 btHalfExtends = btVector3( halfExtends.x, halfExtends.y, halfExtends.z );
+			
+			theShape = new btBoxShape( btHalfExtends );
+
+			btScalar mass = desc.Mass;
+			btVector3 fallInertia( 0, 0, 0 );
+			theShape->calculateLocalInertia( mass, fallInertia );
+
+			btRigidBody::btRigidBodyConstructionInfo
+				rigidBodyCI( mass, motionState, theShape, fallInertia );
+
+			this->myBulletBody = new btRigidBody( rigidBodyCI );
+
+			this->myBulletBody->setRestitution( 0.8 );
+		}
+		else if( shape->GetShapeType() == nPhysics::SHAPE_TYPE_CAPSULE )
+		{
+			btCollisionShape* theShape = nullptr;
+			btVector3 position = btVector3( desc.Position.x, desc.Position.y, desc.Position.z );
+			btDefaultMotionState* motionState = new btDefaultMotionState( btTransform( btQuaternion( 0, 0, 0, 1 ), position ) );
+
+			float radius, height;
+			shape->GetCapsuleRadius( radius );
+			shape->GetCapsuleHeight( height );
+
+			theShape = new btCapsuleShape( radius, height );
+
+			btScalar mass = desc.Mass;
+			btVector3 fallInertia( 0, 0, 0 );
+			theShape->calculateLocalInertia( mass, fallInertia );
+
+			btRigidBody::btRigidBodyConstructionInfo
+				rigidBodyCI( mass, motionState, theShape, fallInertia );
+
+			this->myBulletBody = new btRigidBody( rigidBodyCI );
+
+			this->myBulletBody->setRestitution( 0.8 );
+		}
 
 	}
 	cBulletRigidBody::~cBulletRigidBody()

@@ -26,6 +26,15 @@ namespace nPhysics
 		return new cBulletRigidBody(desc, shape);
 	}
 
+	iShape* cPhysicsBulletFactory::CreateBox( glm::vec3 halfExtends )
+	{
+		return new cBoxShape( halfExtends );
+	}
+	iShape* cPhysicsBulletFactory::CreateCapsule( float radius, float height )
+	{
+		return new cCapsuleShape( radius, height );
+	}
+
 	iShape* cPhysicsBulletFactory::CreateSphere(float radius)
 	{
 		return new cSphereShape(radius);

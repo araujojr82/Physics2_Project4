@@ -7,6 +7,42 @@
 
 namespace nPhysics
 {
+	class cBoxShape : public iShape
+	{
+	public:
+		cBoxShape( glm::vec3 halfExtends );
+
+		virtual ~cBoxShape();
+
+		virtual bool GetBoxHalfExtends( glm::vec3& halfExtendOut );
+
+	private:
+		cBoxShape();
+		cBoxShape( const cBoxShape& other );
+		cBoxShape& operator=( const cBoxShape& other );
+
+		glm::vec3 mHalfExtends;
+	};
+
+	class cCapsuleShape : public iShape
+	{
+	public:
+		cCapsuleShape( float radius, float height );
+
+		virtual ~cCapsuleShape();
+
+		virtual bool GetCapsuleHeight( float& heightOut );
+		virtual bool GetCapsuleRadius( float& radiusOut );
+
+	private:
+		cCapsuleShape();
+		cCapsuleShape( const cCapsuleShape& other );
+		cCapsuleShape& operator=( const cCapsuleShape& other );
+
+		float mRadius;
+		float mHeight;
+	};
+
 	class cSphereShape : public iShape
 	{
 	public:

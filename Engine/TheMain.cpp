@@ -673,6 +673,33 @@ void loadObjectsFile( std::string fileName )
 			
 			newBulletBody = ::g_pBulletPhysicsFactory->CreateRigidBody( theDesc, ::g_pBulletPhysicsFactory->CreateSphere( radius ) );
 		}
+		else if( pTempGO->meshName == "cube" )
+		{
+			pTempGO->textureBlend[0] = 1.0f;
+			pTempGO->textureNames[0] = "Rough_rock_015_COLOR.bmp";
+			pTempGO->textureBlend[1] = 0.0f;
+			pTempGO->textureNames[1] = "Red_Marble_001_COLOR.bmp";
+
+			cMesh tempMesh;
+			::g_pVAOManager->lookupMeshFromName( "cube", tempMesh );
+			glm::vec3 halfExtends = glm::vec3( tempMesh.maxExtent / 2 * pTempGO->scale );
+
+			newBulletBody = ::g_pBulletPhysicsFactory->CreateRigidBody( theDesc, ::g_pBulletPhysicsFactory->CreateBox( halfExtends ) );
+		}
+		else if( pTempGO->meshName == "capsule" )
+		{
+			pTempGO->textureBlend[0] = 1.0f;
+			pTempGO->textureNames[0] = "Rough_rock_015_COLOR.bmp";
+			pTempGO->textureBlend[1] = 0.0f;
+			pTempGO->textureNames[1] = "Red_Marble_001_COLOR.bmp";
+
+			cMesh tempMesh;
+			::g_pVAOManager->lookupMeshFromName( "capsule", tempMesh );
+			float radius = tempMesh.maxExtentXYZ.x / 2 * pTempGO->scale;
+			float height = tempMesh.maxExtentXYZ.y / 2 * pTempGO->scale;
+
+			newBulletBody = ::g_pBulletPhysicsFactory->CreateRigidBody( theDesc, ::g_pBulletPhysicsFactory->CreateCapsule( radius, height ) );
+		}
 		else
 		{
 			pTempGO->textureBlend[0] = 1.0f;

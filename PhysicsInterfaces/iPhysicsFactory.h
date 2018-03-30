@@ -15,6 +15,8 @@ namespace nPhysics
 
 		virtual iRigidBody* CreateRigidBody(const sRigidBodyDesc& desc, iShape* shape) = 0;
 		
+		virtual iShape* CreateBox( glm::vec3 halfExtends ) = 0;
+		virtual iShape* CreateCapsule( float radius, float height ) = 0;
 		virtual iShape* CreateSphere(float radius) = 0;
 		virtual iShape* CreatePlane(const glm::vec3& normal, float planeConst) = 0;
 	};
