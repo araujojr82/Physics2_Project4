@@ -132,7 +132,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="eConstraintType.h" />
     <ClInclude Include="eShapeType.h" />
+    <ClInclude Include="iConstraint.h" />
     <ClInclude Include="iPhysicsFactory.h" />
     <ClInclude Include="iPhysicsWorld.h" />
     <ClInclude Include="iRigidBody.h" />

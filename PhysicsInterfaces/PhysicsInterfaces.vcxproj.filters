@@ -33,5 +33,11 @@
     <ClInclude Include="sRigidBodyDesc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="iConstraint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="eConstraintType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

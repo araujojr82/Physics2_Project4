@@ -157,6 +157,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="constraints.cpp" />
     <ClCompile Include="cPhysicsBulletFactory.cpp" />
     <ClCompile Include="cPhysicsBulletWorld.cpp" />
     <ClCompile Include="cBulletRigidBody.cpp" />
