@@ -30,7 +30,9 @@ bool findNextObject()
 	{
 		for( ; i != ::g_vecGameObjects.size(); i++ )
 		{
-			if( ::g_vecGameObjects[i]->meshName == "ball" )
+			if( ::g_vecGameObjects[i]->meshName == "ball" || 
+				::g_vecGameObjects[i]->meshName == "capsule" || 
+				::g_vecGameObjects[i]->meshName == "cube" )
 			{
 				::g_selectedSphere = i;
 				found = true;

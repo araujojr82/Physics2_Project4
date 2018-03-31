@@ -17,12 +17,11 @@ namespace nPhysics
 	protected:
 		// The constructor is protector, only accessible by the subclasses
 		iConstraint( eConstraintType constraintType ) : mConstraintType( constraintType ) {}
+		iConstraint() {}
 		iConstraint( const iConstraint& other ) {}
 		iConstraint& operator=( const iConstraint& other ) { return *this; }
 
 	private:
 		eConstraintType mConstraintType;
-
-
 	};
 }

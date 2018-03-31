@@ -1,5 +1,4 @@
 #pragma once
-//#include <glm\game_math.h>
 
 namespace nPhysics
 {

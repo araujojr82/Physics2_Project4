@@ -3,6 +3,7 @@
 #include <vector>
 #include "cBulletRigidBody.h"
 #include "shapes.h"
+#include "constraints.h"
 
 #include <btBulletDynamicsCommon.h>
 
@@ -16,10 +17,13 @@ namespace nPhysics
 	public:
 		virtual ~cPhysicsBulletWorld();
 
-		virtual void TimeStep(float deltaTime);
+		virtual void TimeStep( float deltaTime );
 
-		virtual void AddRigidBody(iRigidBody* rigidBody);
-		virtual void RemoveRigidBody(iRigidBody* rigidBody);
+		virtual void AddRigidBody( iRigidBody* rigidBody );
+		virtual void RemoveRigidBody( iRigidBody* rigidBody );
+
+		virtual void AddConstraint( iConstraint* constraint );
+		virtual void RemoveConstraint( iConstraint* constraint );
 
 		void buildBulletWorld();
 

@@ -47,6 +47,7 @@
 #include <iPhysicsWorld.h>
 #include <iRigidBody.h>
 #include <iShape.h>
+#include <iConstraint.h>
 #include <sRigidBodyDesc.h>
 
 HINSTANCE hGetProckDll;
@@ -726,6 +727,61 @@ void loadObjectsFile( std::string fileName )
 
 		::g_vecGameObjects.push_back( pTempGO );
 	}
+
+	{
+		cGameObject* pObjectA = ::g_vecGameObjects[0];
+		cGameObject* pObjectB = ::g_vecGameObjects[1];
+
+		nPhysics::iRigidBody* rbA = pObjectA->btRigidBody;
+		nPhysics::iRigidBody* rbB = pObjectB->btRigidBody;
+
+		cMesh tempMeshA;
+		::g_pVAOManager->lookupMeshFromName( pObjectA->meshName, tempMeshA );
+		glm::vec3 halfExtendsA = glm::vec3( tempMeshA.maxExtent / 2 * pObjectA->scale );
+
+		cMesh tempMeshB;
+		::g_pVAOManager->lookupMeshFromName( pObjectA->meshName, tempMeshB );
+		glm::vec3 halfExtendsB = glm::vec3( tempMeshB.maxExtent / 2 * pObjectB->scale );
+
+		glm::vec3 pivotA = glm::vec3( halfExtendsA );
+		glm::vec3 pivotB = glm::vec3( 0.0f );	//glm::vec3 pivotB = glm::vec3( -halfExtendsB );
+
+		nPhysics::iConstraint* newConstraint = NULL;
+		newConstraint = ::g_pBulletPhysicsFactory->CreateBallAndSocketConstraint( rbA, rbB, pivotA, pivotB );
+
+		::g_pBulletPhysicsWorld->AddConstraint( newConstraint );
+	}
+
+	{
+		cGameObject* pObjectA = ::g_vecGameObjects[2];
+		cGameObject* pObjectB = ::g_vecGameObjects[3];
+
+		nPhysics::iRigidBody* rbA = pObjectA->btRigidBody;
+		nPhysics::iRigidBody* rbB = pObjectB->btRigidBody;
+
+		cMesh tempMeshA;
+		::g_pVAOManager->lookupMeshFromName( pObjectA->meshName, tempMeshA );
+		glm::vec3 halfExtendsA = glm::vec3( tempMeshA.maxExtent / 2 * pObjectA->scale );
+
+		cMesh tempMeshB;
+		::g_pVAOManager->lookupMeshFromName( pObjectA->meshName, tempMeshB );
+		glm::vec3 halfExtendsB = glm::vec3( tempMeshB.maxExtent / 2 * pObjectB->scale );
+
+		glm::vec3 pivotA = glm::vec3( halfExtendsA );
+		glm::vec3 pivotB = glm::vec3( -halfExtendsB );
+
+		glm::vec3 hingeA = glm::vec3( 1.0f, 0.0f, 0.0f );
+		glm::vec3 hingeB = glm::vec3( 1.0f, 0.0f, 0.0f );
+
+		nPhysics::iConstraint* newConstraint = NULL;
+		newConstraint = ::g_pBulletPhysicsFactory->CreatHingeConstraint( rbA, rbB, pivotA, pivotB, hingeA, hingeB );
+
+		::g_pBulletPhysicsWorld->AddConstraint( newConstraint );
+	}
+
+	//glm::mat4x4 mModel = glm::mat4x4( 1.0f );	//		mat4x4_identity(m);
+
+	return;
 }
 
 // Parse the file line to fit into the structure

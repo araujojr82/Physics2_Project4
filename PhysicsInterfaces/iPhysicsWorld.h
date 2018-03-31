@@ -1,5 +1,6 @@
 #pragma once
 #include "iRigidBody.h"
+#include "iConstraint.h"
 
 namespace nPhysics
 {
@@ -12,5 +13,8 @@ namespace nPhysics
 
 		virtual void AddRigidBody(iRigidBody* rigidBody) = 0;
 		virtual void RemoveRigidBody(iRigidBody* rigidBody) = 0;
+
+		virtual void AddConstraint( iConstraint* constraint ) = 0;
+		virtual void RemoveConstraint( iConstraint* constraint ) = 0;
 	};
 }
