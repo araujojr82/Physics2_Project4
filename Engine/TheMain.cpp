@@ -779,8 +779,48 @@ void loadObjectsFile( std::string fileName )
 		::g_pBulletPhysicsWorld->AddConstraint( newConstraint );
 	}
 
-	//glm::mat4x4 mModel = glm::mat4x4( 1.0f );	//		mat4x4_identity(m);
+	{
+		cGameObject* pObjectA = ::g_vecGameObjects[4];
+		cGameObject* pObjectB = ::g_vecGameObjects[5];
 
+		nPhysics::iRigidBody* rbA = pObjectA->btRigidBody;
+		nPhysics::iRigidBody* rbB = pObjectB->btRigidBody;
+
+		glm::vec3 posA, posB;
+		rbA->GetPosition( posA );
+		rbB->GetPosition( posB );
+
+		glm::quat rotA, rotB;
+		rbA->GetRotation( rotA );
+		rbB->GetRotation( rotB );
+
+		nPhysics::iConstraint* newConstraint = NULL;
+		newConstraint = ::g_pBulletPhysicsFactory->Create6DOFConstraint( rbA, rbB, pObjectA->qOrientation, posA, pObjectB->qOrientation, posB, false );																		 
+
+		::g_pBulletPhysicsWorld->AddConstraint( newConstraint );
+	}
+
+	{
+		cGameObject* pObjectA = ::g_vecGameObjects[6];
+		cGameObject* pObjectB = ::g_vecGameObjects[7];
+
+		nPhysics::iRigidBody* rbA = pObjectA->btRigidBody;
+		nPhysics::iRigidBody* rbB = pObjectB->btRigidBody;
+
+		glm::vec3 posA, posB;
+		rbA->GetPosition( posA );
+		rbB->GetPosition( posB );
+
+		glm::quat rotA, rotB;
+		rbA->GetRotation( rotA );
+		rbB->GetRotation( rotB );
+
+		nPhysics::iConstraint* newConstraint = NULL;
+		newConstraint = ::g_pBulletPhysicsFactory->CreateConeTwistConstraint( rbA, rbB, pObjectA->qOrientation, posA, pObjectB->qOrientation, posB );
+
+		::g_pBulletPhysicsWorld->AddConstraint( newConstraint );
+	}
+	
 	return;
 }
 
