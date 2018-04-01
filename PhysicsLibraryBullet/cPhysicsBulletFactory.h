@@ -26,5 +26,11 @@ namespace nPhysics
 		virtual iConstraint* CreateBallAndSocketConstraint( iRigidBody* rbA, iRigidBody* rbB, const glm::vec3& pivotInA, const glm::vec3& pivotInB );
 		virtual iConstraint* CreatHingeConstraint( iRigidBody* rb, const glm::vec3& pivot, const glm::vec3& axis );
 		virtual iConstraint* CreatHingeConstraint( iRigidBody* rbA, iRigidBody* rbB, const glm::vec3& pivotInA, const glm::vec3& pivotInB, const glm::vec3& axisInA, const glm::vec3& axisInB );
+
+		virtual iConstraint* Create6DOFConstraint( iRigidBody* rb, const glm::quat& rotation, const glm::vec3 translation, bool useLinearReferenceFrame );
+		virtual iConstraint* Create6DOFConstraint( iRigidBody* rbA, iRigidBody* rbB, const glm::quat& rotationA, const glm::vec3 translationA, const glm::quat& rotationB, const glm::vec3 translationB, const bool useLinearReferenceFrameA );
+		virtual iConstraint* CreateConeTwistConstraint( iRigidBody* rb, const glm::quat& rotation, const glm::vec3 translation );
+		virtual iConstraint* CreateConeTwistConstraint( iRigidBody* rbA, iRigidBody* rbB, const glm::quat& rotationA, const glm::vec3 translationA, const glm::quat& rotationB, const glm::vec3 translationB );
+
 	};
 }

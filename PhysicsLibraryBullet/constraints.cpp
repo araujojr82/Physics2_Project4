@@ -83,7 +83,7 @@ namespace nPhysics
 		mConstraint->setUserConstraintPtr( 0 );
 	}	
 
-	c6DOFConstraint::c6DOFConstraint( cBulletRigidBody* rbA, cBulletRigidBody* rbB, cBulletRigidBody* rb, const btTransform& frameInA, const btTransform& frameInB, const bool useLinearReferenceFrameA )
+	c6DOFConstraint::c6DOFConstraint( cBulletRigidBody* rbA, cBulletRigidBody* rbB, const btTransform& frameInA, const btTransform& frameInB, const bool useLinearReferenceFrameA )
 		: iConstraint( CONSTRAINT_TYPE_6DOF )
 	{
 		mConstraint = new btGeneric6DofConstraint( *rbA->GetBulletBody(), *rbB->GetBulletBody(), frameInA, frameInB, useLinearReferenceFrameA );
@@ -119,7 +119,7 @@ namespace nPhysics
 		mConstraint->setUserConstraintPtr( 0 );
 	}
 
-	cConeTwistConstraint::cConeTwistConstraint( cBulletRigidBody* rbA, cBulletRigidBody* rbB, cBulletRigidBody* rb, const btTransform& rbAFrame, const btTransform& rbBFrame )
+	cConeTwistConstraint::cConeTwistConstraint( cBulletRigidBody* rbA, cBulletRigidBody* rbB, const btTransform& rbAFrame, const btTransform& rbBFrame )
 		: iConstraint( CONSTRAINT_TYPE_CONE_TWIST )
 	{
 		mConstraint = new btConeTwistConstraint( *rbA->GetBulletBody(), *rbB->GetBulletBody(), rbAFrame, rbBFrame );

@@ -56,7 +56,7 @@ namespace nPhysics
 	{
 	public:
 		c6DOFConstraint( cBulletRigidBody* rb, const btTransform& frame, const bool useLinearReferenceFrame );
-		c6DOFConstraint( cBulletRigidBody* rbA, cBulletRigidBody* rbB, cBulletRigidBody* rb, const btTransform& frameInA, const btTransform& frameInB, const bool useLinearReferenceFrameA );
+		c6DOFConstraint( cBulletRigidBody* rbA, cBulletRigidBody* rbB, const btTransform& frameInA, const btTransform& frameInB, const bool useLinearReferenceFrameA );
 
 		virtual ~c6DOFConstraint();
 
@@ -80,7 +80,7 @@ namespace nPhysics
 	{
 	public:
 		cConeTwistConstraint( cBulletRigidBody* rb, const btTransform& rbFrame );
-		cConeTwistConstraint( cBulletRigidBody* rbA, cBulletRigidBody* rbB, cBulletRigidBody* rb, const btTransform& rbAFrame, const btTransform& rbBFrame );
+		cConeTwistConstraint( cBulletRigidBody* rbA, cBulletRigidBody* rbB, const btTransform& rbAFrame, const btTransform& rbBFrame );
 
 		virtual ~cConeTwistConstraint();
 
