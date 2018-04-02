@@ -126,10 +126,6 @@ struct sMeshparameters		// for the Meshes' input file
 	std::string meshFilename;
 };
 
-
-//std::vector< glm::vec3 > g_vecPoints;
-//std::vector< pointTriangles > g_vecPoints;
-
 // Forward declare the Functions
 void loadConfigFile( std::string fileName, sWindowConfig& wConfig );
 sGOparameters parseObjLine( std::ifstream &source );
@@ -184,6 +180,40 @@ void DrawRenderStuff( glm::mat4 view, glm::mat4 projection )
 		}
 	}
 	::g_pDebugRenderer->RenderDebugObjects( view, projection );
+}
+
+void checkCollisions()
+{
+	for( int i = 0; i != ::g_vecGameObjects.size(); i++ )
+	{
+		cGameObject* pTempGO = ::g_vecGameObjects[i];
+
+		if( pTempGO->meshName == "floor_plane" ||
+			pTempGO->meshName == "north_plane" ||
+			pTempGO->meshName == "south_plane" ||
+			pTempGO->meshName == "left_plane" ||
+			pTempGO->meshName == "right_plane" ) continue;
+
+		bool isColliding;
+		pTempGO->btRigidBody->GetCollisionStatus( isColliding );
+		if( isColliding )
+		{
+			//if( pTempGO->textureBlend[0] != 0.0f ) 
+			//	pTempGO->textureBlend[0] = 0.1f;
+			//if( pTempGO->textureBlend[1] != 0.0f ) 
+			//	pTempGO->textureBlend[1] = 0.1f;
+			pTempGO->textureBlend[2] = 1.0f;
+			pTempGO->btRigidBody->SetCollisionStatus( false );
+		}
+		else
+		{
+			//if( pTempGO->textureBlend[0] != 0.0f ) 
+			//	pTempGO->textureBlend[0] = 1.0f;
+			//if( pTempGO->textureBlend[1] != 0.0f ) 
+			//	pTempGO->textureBlend[1] = 1.0f;
+			pTempGO->textureBlend[2] = 0.0f;
+		}
+	}
 }
 
 
@@ -343,6 +373,7 @@ int main( void )
 	}
 	::g_pTextureManager->Create2DTextureFromBMPFile( "Rough_rock_015_COLOR.bmp", true );
 	::g_pTextureManager->Create2DTextureFromBMPFile( "Red_Marble_001_COLOR.bmp", true );
+	::g_pTextureManager->Create2DTextureFromBMPFile( "stripes.bmp", true );	
 	
 	cMesh terrainMesh;
 	
@@ -447,14 +478,17 @@ int main( void )
 			GLint curShaderID = ::g_pShaderManager->getIDFromFriendlyName("mySexyShader");
 			GLint textSampler00_ID = glGetUniformLocation(curShaderID, "myAmazingTexture00");
 			GLint textSampler01_ID = glGetUniformLocation(curShaderID, "myAmazingTexture01");
+			GLint textSampler02_ID = glGetUniformLocation( curShaderID, "myAmazingTexture02" );
 			// And so on (up to 10, or whatever number of textures)... 
 
 			GLint textBlend00_ID = glGetUniformLocation(curShaderID, "textureBlend00");
 			GLint textBlend01_ID = glGetUniformLocation(curShaderID, "textureBlend01");
+			GLint textBlend02_ID = glGetUniformLocation( curShaderID, "textureBlend02" );
 
 			// This connects the texture sampler to the texture units... 
 			glUniform1i(textSampler00_ID, 0);
 			glUniform1i(textSampler01_ID, 1);
+			glUniform1i( textSampler02_ID, 2 );
 		}
 
 
@@ -514,6 +548,8 @@ int main( void )
 		
 		// Physics Calculation
 		::g_pBulletPhysicsWorld->TimeStep( ( float )deltaTime );
+		
+		checkCollisions();
 		
 		lastTimeStep = curTime;
 
@@ -661,13 +697,17 @@ void loadObjectsFile( std::string fileName )
 
 		theDesc.PrevPosition = theDesc.Position;
 
+		pTempGO->textureBlend[0] = 1.0f;
+		pTempGO->textureNames[0] = "Rough_rock_015_COLOR.bmp";		
+		pTempGO->textureBlend[1] = 0.0f;
+		pTempGO->textureNames[1] = "Red_Marble_001_COLOR.bmp";
+		pTempGO->textureBlend[2] = 0.0f;
+		//pTempGO->textureNames[2] = "Rough_rock_014_COLOR.bmp";
+		pTempGO->textureNames[2] = "stripes.bmp";		
+	
+
 		if( pTempGO->meshName == "ball" )
 		{
-			pTempGO->textureBlend[0] = 1.0f;
-			pTempGO->textureNames[0] = "Rough_rock_015_COLOR.bmp";
-			pTempGO->textureBlend[1] = 0.0f;
-			pTempGO->textureNames[1] = "Red_Marble_001_COLOR.bmp";
-
 			cMesh tempMesh;
 			::g_pVAOManager->lookupMeshFromName( "ball", tempMesh );
 			float radius = tempMesh.maxExtent / 2 * pTempGO->scale;
@@ -676,11 +716,6 @@ void loadObjectsFile( std::string fileName )
 		}
 		else if( pTempGO->meshName == "cube" )
 		{
-			pTempGO->textureBlend[0] = 1.0f;
-			pTempGO->textureNames[0] = "Rough_rock_015_COLOR.bmp";
-			pTempGO->textureBlend[1] = 0.0f;
-			pTempGO->textureNames[1] = "Red_Marble_001_COLOR.bmp";
-
 			cMesh tempMesh;
 			::g_pVAOManager->lookupMeshFromName( "cube", tempMesh );
 			glm::vec3 halfExtends = glm::vec3( tempMesh.maxExtent / 2 * pTempGO->scale );
@@ -689,10 +724,6 @@ void loadObjectsFile( std::string fileName )
 		}
 		else if( pTempGO->meshName == "capsule" )
 		{
-			pTempGO->textureBlend[0] = 1.0f;
-			pTempGO->textureNames[0] = "Rough_rock_015_COLOR.bmp";
-			pTempGO->textureBlend[1] = 0.0f;
-			pTempGO->textureNames[1] = "Red_Marble_001_COLOR.bmp";
 
 			cMesh tempMesh;
 			::g_pVAOManager->lookupMeshFromName( "capsule", tempMesh );
@@ -982,17 +1013,24 @@ void DrawObject( cGameObject* pTheGO )
 	glBindTexture( GL_TEXTURE_2D,
 		::g_pTextureManager->getTextureIDFromName( pTheGO->textureNames[1] ) );
 
+	glActiveTexture( GL_TEXTURE2 );
+	glBindTexture( GL_TEXTURE_2D,
+		::g_pTextureManager->getTextureIDFromName( pTheGO->textureNames[2] ) );
+
 	// Set sampler in the shader
 	GLint curShaderID = ::g_pShaderManager->getIDFromFriendlyName( "mySexyShader" );
 	GLint textSampler00_ID = glGetUniformLocation( curShaderID, "myAmazingTexture00" );
 	GLint textSampler01_ID = glGetUniformLocation( curShaderID, "myAmazingTexture01" );
+	GLint textSampler02_ID = glGetUniformLocation( curShaderID, "myAmazingTexture02" );
 	
 	GLint textBlend00_ID = glGetUniformLocation( curShaderID, "textureBlend00" );
 	GLint textBlend01_ID = glGetUniformLocation( curShaderID, "textureBlend01" );
+	GLint textBlend02_ID = glGetUniformLocation( curShaderID, "textureBlend02" );
 
 	// And the blending values
 	glUniform1f( textBlend00_ID, pTheGO->textureBlend[0] );
 	glUniform1f( textBlend01_ID, pTheGO->textureBlend[1] );
+	glUniform1f( textBlend02_ID, pTheGO->textureBlend[2] );
 	
 	if( bIsWireframe )
 	{

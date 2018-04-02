@@ -18,15 +18,15 @@ namespace nPhysics
 		virtual ~cPhysicsBulletWorld();
 
 		virtual void TimeStep( float deltaTime );
-
+		
 		virtual void AddRigidBody( iRigidBody* rigidBody );
 		virtual void RemoveRigidBody( iRigidBody* rigidBody );
 
 		virtual void AddConstraint( iConstraint* constraint );
 		virtual void RemoveConstraint( iConstraint* constraint );
-
+		
 		void buildBulletWorld();
-
+		
 	private:
 		btBroadphaseInterface * broadphase;
 		btDefaultCollisionConfiguration* collisionConfiguration;

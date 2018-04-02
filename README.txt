@@ -1,9 +1,24 @@
-Physics 2 Project 3
-
-Please compile all projects in 32 or 64 bits RELEASE mode before execute.
-The Debug mode can't handle the soft body calculations well enough.
+Physics 2 Project 4
 
 Author: Euclides Araujo
+
+
+The Constraints used in this project are:
+BALL_AND_SOCKET,
+HINGE,
+6DOF,
+CONE_TWIST.
+
+They are created in TheMain.cpp harcoded to the objects in pairs, so objects 0 and 1 are for th first constraint, 2 and 3 for the second and so on.
+(Line 762 and forward, just in case you're looking for it)
+
+The objects used are Sphere, Plane, Cube and Capsule.
+
+There's a collision response being used to change the textures in the objects while they're colliding.
+
+
+Instructions:
+Please compile all projects in 32 or 64 bits before execute.
 
 User input keys:
 W,A,S,D,Q,E: Controls the camera position; NOT THE BALL

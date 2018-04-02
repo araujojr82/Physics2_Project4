@@ -42,6 +42,9 @@ namespace nPhysics
 
 			this->myBulletBody->setRestitution( 0.70 );
 
+			this->myBulletBody->setCollisionFlags( this->myBulletBody->getCollisionFlags() | btCollisionObject::CF_CUSTOM_MATERIAL_CALLBACK );
+			this->myBulletBody->setUserPointer( this );
+
 		}			
 		else if( shape->GetShapeType() == nPhysics::SHAPE_TYPE_SPHERE )
 		{
@@ -64,6 +67,10 @@ namespace nPhysics
 			this->myBulletBody = new btRigidBody( rigidBodyCI );
 
 			this->myBulletBody->setRestitution( 0.8 );
+			
+			this->myBulletBody->setCollisionFlags( this->myBulletBody->getCollisionFlags() | btCollisionObject::CF_CUSTOM_MATERIAL_CALLBACK );
+			this->myBulletBody->setUserPointer( this );
+
 		}
 		else if( shape->GetShapeType() == nPhysics::SHAPE_TYPE_BOX )
 		{
@@ -87,6 +94,10 @@ namespace nPhysics
 			this->myBulletBody = new btRigidBody( rigidBodyCI );
 
 			this->myBulletBody->setRestitution( 0.8 );
+			
+			this->myBulletBody->setCollisionFlags( this->myBulletBody->getCollisionFlags() | btCollisionObject::CF_CUSTOM_MATERIAL_CALLBACK );
+			this->myBulletBody->setUserPointer( this );
+
 		}
 		else if( shape->GetShapeType() == nPhysics::SHAPE_TYPE_CAPSULE )
 		{
@@ -110,6 +121,10 @@ namespace nPhysics
 			this->myBulletBody = new btRigidBody( rigidBodyCI );
 
 			this->myBulletBody->setRestitution( 0.8 );
+
+			this->myBulletBody->setCollisionFlags( this->myBulletBody->getCollisionFlags() | btCollisionObject::CF_CUSTOM_MATERIAL_CALLBACK );
+			this->myBulletBody->setUserPointer( this );
+
 		}
 
 	}
@@ -263,5 +278,15 @@ namespace nPhysics
 	btRigidBody* cBulletRigidBody::GetBulletBody()
 	{
 		return this->myBulletBody;
+	}
+
+	void cBulletRigidBody::SetCollisionStatus( bool wasHit )
+	{		
+		this->collisionStatus = wasHit;
+	}
+
+	void cBulletRigidBody::GetCollisionStatus( bool& wasHit )
+	{ 
+		wasHit = this->collisionStatus;
 	}
 }

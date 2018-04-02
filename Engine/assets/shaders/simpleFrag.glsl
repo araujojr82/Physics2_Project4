@@ -23,11 +23,13 @@ uniform bool bIsDebugWireFrameObject;
 // Note: this CAN'T be an array (sorry). See 3D texture array
 uniform sampler2D myAmazingTexture00;		// Represents a 2D image
 uniform sampler2D myAmazingTexture01;		// Represents a 2D image
+uniform sampler2D myAmazingTexture02;		// Represents a 2D image
 // ... and so on...
 
 
 uniform float textureBlend00;		// Or an array
 uniform float textureBlend01;		
+uniform float textureBlend02;		
 // .... and so on... 
 
 uniform samplerCube skyBoxSampler;
@@ -89,6 +91,7 @@ void main()
 	vec2 theUVCoords = uvX2out.xy;		// use UV #1 of vertex
 	vec4 texCol00 = texture( myAmazingTexture00, theUVCoords.xy );
 	vec4 texCol01 = texture( myAmazingTexture01, theUVCoords.xy );
+	vec4 texCol02 = texture( myAmazingTexture02, theUVCoords.xy );
 	//... and so on (to how many textures you are using)
 	
 	// use the blend value to combine textures
@@ -96,7 +99,8 @@ void main()
 	
 	//matDiffuse.rgb += texCol00.rgb;	
 	matDiffuse.rgb += (texCol00.rgb * textureBlend00) + 
-	                  (texCol01.rgb * textureBlend01);	// .. and so on
+	                  (texCol01.rgb * textureBlend01) + 
+					  (texCol02.rgb * textureBlend02);	// .. and so on
 	                       //(texCol02.rgb * textureBlend00);	// .. and so on
 	// We will look at specular or gloss maps later, 
 	// 	but making the specular white is fine

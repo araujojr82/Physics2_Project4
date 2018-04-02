@@ -35,6 +35,9 @@ namespace nPhysics
 		virtual void ApplyImpulse( glm::vec3 impulse );
 		virtual void ApplyImpulseAtPoint( glm::vec3 impulse, glm::vec3 relativePoint );
 
+		virtual void SetCollisionStatus( bool wasHit );
+		virtual void GetCollisionStatus( bool& wasHit );
+
 		btRigidBody* GetBulletBody();
 
 	private:
@@ -52,5 +55,7 @@ namespace nPhysics
 		float mInvMass;
 
 		btRigidBody* myBulletBody;
+
+		bool collisionStatus;
 	};
 }

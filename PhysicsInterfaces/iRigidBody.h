@@ -32,5 +32,7 @@ namespace nPhysics
 		virtual void ApplyImpulse( glm::vec3 impulse ) = 0;
 		virtual void ApplyImpulseAtPoint( glm::vec3 impulse, glm::vec3 relativePoint ) = 0;
 		
+		virtual void SetCollisionStatus( bool wasHit ) = 0;
+		virtual void GetCollisionStatus( bool& wasHit ) = 0;
 	};
 }
